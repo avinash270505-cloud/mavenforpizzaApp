@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Place Pizza Order</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="container">
+    <h1>🍕 Place Your Order</h1>
+    <p class="subtitle">Order your favorite pizza in just a few clicks!</p>
+
+    <div class="error" th:if="${error}" th:text="${error}"></div>
+
+    <form method="post" action="/order">
+        <label for="customer">Customer Name</label>
+        <input type="text" id="customer" name="customer" placeholder="Enter your name" required>
+
+        <label for="pizzaIndex">Select Pizza</label>
+        <select id="pizzaIndex" name="pizzaIndex" required>
+            <option th:each="pizza, stat : ${pizzas}"
+                    th:value="${stat.index}"
+                    th:text="${pizza.emoji + ' ' + pizza.name + ' - ₹' + #numbers.formatDecimal(pizza.price, 1, 2)}">
+                🍕 Margherita - ₹250.00
+            </option>
+        </select>
+
+        <label for="quantity">Quantity</label>
+        <input type="number" id="quantity" name="quantity" min="1" value="1" required>
+
+        <label for="offer">Offer Code</label>
+        <input type="text" id="offer" name="offer" placeholder="Example: SAVE20">
+
+        <button type="submit">🛒 Place Order</button>
+    </form>
+
+    <div class="bill-box" th:if="${success}">
+        <h2>Order Summary</h2>
+        <p><strong>✅ Order Placed Successfully!</strong></p>
+        <hr>
+        <p><strong>Order ID :</strong> <span th:text="${order.orderId}"></span></p>
+        <p><strong>Customer :</strong> <span th:text="${order.customer}"></span></p>
+        <p><strong>Pizza :</strong> <span th:text="${order.pizza.name}"></span></p>
+        <p><strong>Price :</strong> ₹<span th:text="${#numbers.formatDecimal(order.pizza.price, 1, 2)}"></span></p>
+        <p><strong>Quantity :</strong> <span th:text="${order.quantity}"></span></p>
+        <p><strong>Subtotal :</strong> ₹<span th:text="${#numbers.formatDecimal(order.subtotal, 1, 2)}"></span></p>
+        <p><strong>Discount :</strong> ₹<span th:text="${#numbers.formatDecimal(order.discount, 1, 2)}"></span></p>
+        <p><strong>Amount After Discount :</strong> ₹<span th:text="${#numbers.formatDecimal(order.amountAfterDiscount, 1, 2)}"></span></p>
+        <p><strong>GST (5%) :</strong> ₹<span th:text="${#numbers.formatDecimal(order.gst, 1, 2)}"></span></p>
+        <hr>
+        <p class="total">Grand Total : ₹<span th:text="${#numbers.formatDecimal(order.grandTotal, 1, 2)}"></span></p>
+        <p class="success">Thank you for ordering with us! 🍕</p>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="/"><button type="button">🏠 Home</button></a>
+        <a href="/billing"><button type="button">💳 Billing</button></a>
+        <a href="/track"><button type="button">🚚 Track Order</button></a>
+    </div>
+</div>
+</body>
+</html>

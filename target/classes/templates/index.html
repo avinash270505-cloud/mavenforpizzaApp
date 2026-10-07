@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PizzaHub | Online Pizza Ordering</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<nav class="navbar">
+    <div class="logo">🍕 PizzaHub</div>
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/order">Order</a>
+        <a href="/billing">Billing</a>
+        <a href="/track">Track</a>
+    </div>
+</nav>
+
+<section class="hero">
+    <h1>🍕 Online Pizza Ordering System</h1>
+    <p>Hot &amp; Fresh Pizza Delivered To Your Door</p>
+    <a href="/order"><button>Order Now 🍕</button></a>
+</section>
+
+<h2 class="title">🔥 Today's Special Offers</h2>
+<section class="food-section">
+    <div class="food-card offer">
+        <div class="emoji">🎁</div>
+        <h3>SAVE20</h3>
+        <p>Get 20% OFF on your order</p>
+    </div>
+    <div class="food-card offer">
+        <div class="emoji">🍕🥤</div>
+        <h3>Family Combo</h3>
+        <p>Pizza + Drink + Garlic Bread</p>
+    </div>
+</section>
+
+<h2 class="title">🍕 Popular Pizzas</h2>
+<section class="food-section">
+    <div class="food-card" th:each="pizza : ${pizzas}">
+        <div class="emoji" th:text="${pizza.emoji}">🍕</div>
+        <h3 th:text="${pizza.name}">Pizza</h3>
+        <p th:text="${pizza.description}">Description</p>
+        <span>₹<span th:text="${#numbers.formatDecimal(pizza.price, 1, 2)}">250.00</span></span>
+    </div>
+</section>
+
+<h2 class="title">Our Services</h2>
+<section class="services">
+    <div class="service-card">
+        <h2>🍕</h2><h3>Place Order</h3>
+        <p>Select pizza and order instantly</p>
+        <a href="/order"><button>Order</button></a>
+    </div>
+    <div class="service-card">
+        <h2>💳</h2><h3>Billing</h3>
+        <p>Generate GST invoice easily</p>
+        <a href="/billing"><button>Bill</button></a>
+    </div>
+    <div class="service-card">
+        <h2>🚚</h2><h3>Track Order</h3>
+        <p>Check your delivery status</p>
+        <a href="/track"><button>Track</button></a>
+    </div>
+</section>
+
+<footer>
+    <h3>🍕 Thank You For Choosing PizzaHub</h3>
+    <p>Fresh Pizza | Fast Delivery | Best Offers</p>
+</footer>
+</body>
+</html>

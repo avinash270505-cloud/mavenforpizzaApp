@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Pizza Order</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="container">
+    <h1>🚚 Track Your Order</h1>
+    <p class="subtitle">Enter your Order ID to check the current delivery status.</p>
+
+    <div class="error" th:if="${error}" th:text="${error}"></div>
+
+    <form method="post" action="/track">
+        <label for="orderId">Order ID</label>
+        <input type="text" id="orderId" name="orderId" placeholder="Example: ORD12345" required>
+        <button type="submit">🔍 Track Order</button>
+    </form>
+
+    <div class="bill-box" th:if="${order != null}">
+        <h2>Order Status</h2>
+        <p><strong>Order ID :</strong> <span th:text="${order.orderId}"></span></p>
+        <p><strong>Customer :</strong> <span th:text="${order.customer}"></span></p>
+        <p><strong>Current Status :</strong> <span th:text="${currentStatus}"></span></p>
+        <p><strong>Order Progress :</strong> <span th:text="${currentProgress}"></span>%</p>
+        <progress th:value="${currentProgress}" max="100"></progress>
+        <p><strong>Estimated Delivery :</strong> <span th:text="${eta}"></span></p>
+        <hr>
+        <p class="success">Thank you for choosing our Pizza Store! 🍕</p>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="/"><button type="button">🏠 Home</button></a>
+        <a href="/order"><button type="button">🍕 Place Order</button></a>
+        <a href="/billing"><button type="button">💳 Billing</button></a>
+    </div>
+</div>
+</body>
+</html>

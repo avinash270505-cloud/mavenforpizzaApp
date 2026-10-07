@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizza Billing</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="container">
+    <h1>🍕 Pizza Billing</h1>
+    <p class="subtitle">Generate the customer's final bill</p>
+
+    <div class="error" th:if="${error}" th:text="${error}"></div>
+
+    <form method="post" action="/billing">
+        <label for="customer">Customer Name</label>
+        <input type="text" id="customer" name="customer" placeholder="Enter customer name" required>
+
+        <label for="amount">Order Amount (₹)</label>
+        <input type="number" id="amount" name="amount" placeholder="Enter order amount" min="1" step="0.01" required>
+
+        <button type="submit">Generate Bill</button>
+    </form>
+
+    <div class="bill-box" th:if="${success}">
+        <h2>Bill Summary</h2>
+        <p><strong>Bill No :</strong> <span th:text="${bill.billNo}"></span></p>
+        <p><strong>Customer :</strong> <span th:text="${bill.customer}"></span></p>
+        <p><strong>Subtotal :</strong> ₹<span th:text="${#numbers.formatDecimal(bill.subtotal, 1, 2)}"></span></p>
+        <p><strong>GST (5%) :</strong> ₹<span th:text="${#numbers.formatDecimal(bill.gst, 1, 2)}"></span></p>
+        <hr>
+        <p class="total">Total Amount : ₹<span th:text="${#numbers.formatDecimal(bill.total, 1, 2)}"></span></p>
+        <p class="success">✔ Bill Generated Successfully</p>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="/"><button type="button">🏠 Home</button></a>
+        <a href="/order"><button type="button">🛒 Place Order</button></a>
+        <a href="/track"><button type="button">🚚 Track Order</button></a>
+    </div>
+</div>
+</body>
+</html>
